@@ -4,7 +4,7 @@ export default function BookDetails({
   index,
   book,
 }: {
-  index: number;
+  index?: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   book: any;
 }) {

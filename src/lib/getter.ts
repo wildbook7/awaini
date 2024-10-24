@@ -3,13 +3,12 @@ import prisma from "./prisma";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function createBook(book: any) {
   const authors = book.authors;
-  const price = book.listPrice;
   const img = book.imageLinks;
   return {
     id: book.id,
     title: book.title,
     author: authors ? authors.join(",") : "",
-    price: price ? price.amount : 0,
+    price: book.retailPrice?.amount ?? 0,
     publisher: book.publisher,
     published: book.publishedDate,
     image: img?.smallThumbnail,
@@ -24,7 +23,13 @@ export async function getBooksByKeyword(keyword: string) {
   // console.log(result?.items);
   const books = [];
   for (const b of result?.items ?? []) {
-    books.push(createBook(b.volumeInfo));
+    books.push(
+      createBook({
+        id: b.id,
+        retailPrice: b.saleInfo.retailPrice,
+        ...b.volumeInfo,
+      })
+    );
   }
   return books;
 }
@@ -34,7 +39,11 @@ export async function getBookById(id: string) {
     `https://www.googleapis.com/books/v1/volumes/${id}?key=${process.env.GOOGLE_BOOKS_API_KEY}`
   );
   const result = await res.json();
-  return createBook(result);
+  return createBook({
+    id: result.id,
+    retailPrice: result.saleInfo.retailPrice,
+    ...result.volumeInfo,
+  });
 }
 
 export async function getReviewById(id: string) {
