@@ -42,3 +42,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ```bash
 set -a && source .env.local && set +a && npx prisma studio
 ```
+
+## Google API Console にて Books API を有効にする
+
+- [Google API Console](https://console.developers.google.com/?hl=ja)
+- [Google Books API](https://developers.google.com/books?hl=ja)

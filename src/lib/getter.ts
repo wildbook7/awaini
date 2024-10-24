@@ -12,24 +12,27 @@ export function createBook(book: any) {
     price: price ? price.amount : 0,
     publisher: book.publisher,
     published: book.publishedDate,
-    image: img ? img.smallThumbnail : "/vercel.svg",
+    image: img?.smallThumbnail,
   };
 }
 
 export async function getBooksByKeyword(keyword: string) {
   const res = await fetch(
-    `https://www.googleapis.com/books/v1/volumes?q=${keyword}&langRestrict=ja&maxResults=20&printType=books`
+    `https://www.googleapis.com/books/v1/volumes?q=${keyword}&langRestrict=ja&maxResults=20&printType=books&key=${process.env.GOOGLE_BOOKS_API_KEY}`
   );
   const result = await res.json();
+  // console.log(result?.items);
   const books = [];
   for (const b of result?.items ?? []) {
-    books.push(createBook(b));
+    books.push(createBook(b.volumeInfo));
   }
   return books;
 }
 
 export async function getBookById(id: string) {
-  const res = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}`);
+  const res = await fetch(
+    `https://www.googleapis.com/books/v1/volumes/${id}?key=${process.env.GOOGLE_BOOKS_API_KEY}`
+  );
   const result = await res.json();
   return createBook(result);
 }
