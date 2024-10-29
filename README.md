@@ -35,6 +35,12 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
+## Prisma docs
+
+開発環境でのホットリロード時に DB 接続インスタンスが増えないよう、`prisma.ts` にて対処している。本番環境はサーバーレスで動作するため、対処していない。
+
+- [Deploy to Vercel](https://www.prisma.io/docs/orm/prisma-client/deployment/serverless/deploy-to-vercel)
+
 ## 環境変数を読み込んだ後に Prisma Studio を起動
 
 次のコマンドをルートディレクトリーで実行します。
@@ -47,3 +53,7 @@ set -a && source .env.local && set +a && npx prisma studio
 
 - [Google API Console](https://console.developers.google.com/?hl=ja)
 - [Google Books API](https://developers.google.com/books?hl=ja)
+
+## その他
+
+- https://youtu.be/vOLIVFKR-wI?si=wtYJDsKcg3i8_UQt
