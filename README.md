@@ -35,6 +35,13 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
+## 開発環境構築の手順
+
+- `git clone` コマンドを使用して、ソースコードをローカル PC にダウンロード。
+- `npm install` を実行して、使用するライブラリをダウンロード。
+- `.env.local` ファイルをルートディレクトリーに作成して、Vercel Postgres の環境変数をコピーペーストする。
+- `.env.local` ファイルに環境変数 `GOOGLE_BOOKS_API_KEY` を追加する。
+
 ## Prisma docs
 
 開発環境でのホットリロード時に DB 接続インスタンスが増えないよう、`prisma.ts` にて対処している。本番環境はサーバーレスで動作するため、対処していない。
