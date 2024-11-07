@@ -1,13 +1,17 @@
 import "./task.css";
 
-type TaskType = {
-  task: { id: string; title: string; state: string };
+export type TaskType = {
+  id: string;
+  title: string;
+  state: string;
   onArchiveTask: (id: string) => void;
   onPinTask: (id: string) => void;
 };
 
 export default function Task({
-  task: { id, title, state },
+  id,
+  title,
+  state,
   onArchiveTask,
   onPinTask,
 }: TaskType) {
