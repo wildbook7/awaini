@@ -189,7 +189,7 @@ textarea {
 }
 
 .icon-check:before {
-  content: "\e65e";
+  content: "✔";
 }
 
 .list-heading {
