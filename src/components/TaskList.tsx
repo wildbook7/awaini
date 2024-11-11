@@ -1,23 +1,34 @@
 import "./task.css";
 import Task, { TaskType } from "./Task";
+import { useSelector } from "react-redux";
 
 export type TaskListType = {
-  loading: boolean;
-  tasks: TaskType[];
   onPinTask: () => void;
   onArchiveTask: () => void;
 };
 
-export default function TaskList({
-  loading,
-  tasks,
-  onPinTask,
-  onArchiveTask,
-}: TaskListType) {
+export default function TaskList({ onPinTask, onArchiveTask }: TaskListType) {
   const events = {
     onPinTask,
     onArchiveTask,
   };
+
+  // We're retrieving our state from the store
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const tasks = useSelector((state: any) => {
+    const tasksInOrder = [
+      ...state.taskbox.tasks.filter((t: TaskType) => t.state === "TASK_PINNED"),
+      ...state.taskbox.tasks.filter((t: TaskType) => t.state !== "TASK_PINNED"),
+    ];
+    const filteredTasks = tasksInOrder.filter(
+      (t) => t.state === "TASK_INBOX" || t.state === "TASK_PINNED"
+    );
+    return filteredTasks;
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { status } = useSelector((state: any) => state.taskbox);
+
   const LoadingRow = (
     <div className="loading-item">
       <span className="glow-checkbox" />
@@ -26,7 +37,7 @@ export default function TaskList({
       </span>
     </div>
   );
-  if (loading) {
+  if (status === "loading") {
     return (
       <div className="list-items" data-testid="loading" key={"loading"}>
         {LoadingRow}
