@@ -64,3 +64,9 @@ set -a && source .env.local && set +a && npx prisma studio
 ## その他
 
 - https://youtu.be/vOLIVFKR-wI?si=wtYJDsKcg3i8_UQt
+- state の扱い方の比較
+  | |特徴|
+  |-|-|
+  |useState|set 関数呼び出しが分散して、コードの見通しが悪くなる傾向がある。|
+  |useReducer|set 関数呼び出し箇所を「アクション(type 等)」ディスパッチに変えることで、state ロジックが reducer 関数に集約される。|
+  |Redux(Toolkit)|個別の『counterSlice.ts』等ファイルにて、initialState と reducers(reducer と ActionCreator の組合せ)を用意する。<br>『store.ts』ファイルにて、個別ファイルの reducer(上記の reducers に相当)を関連付ける。<br>state 値の参照は、useSelector 経由で store から取得する。<br> state 値の更新は、useDispatch 経由で Action を store へ送付する。|
