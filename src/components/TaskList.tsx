@@ -1,23 +1,40 @@
 import "./task.css";
 import Task, { TaskType } from "./Task";
+import { useDispatch, useSelector } from "react-redux";
+import { updateTaskState } from "@/lib/store";
 
 export type TaskListType = {
-  loading: boolean;
-  tasks: TaskType[];
   onPinTask: () => void;
   onArchiveTask: () => void;
 };
 
-export default function TaskList({
-  loading,
-  tasks,
-  onPinTask,
-  onArchiveTask,
-}: TaskListType) {
-  const events = {
-    onPinTask,
-    onArchiveTask,
+export default function TaskList() {
+  // We're retrieving our state from the store
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const tasks = useSelector((state: any) => {
+    const tasksInOrder = [
+      ...state.taskbox.tasks.filter((t: TaskType) => t.state === "TASK_PINNED"),
+      ...state.taskbox.tasks.filter((t: TaskType) => t.state !== "TASK_PINNED"),
+    ];
+    const filteredTasks = tasksInOrder.filter(
+      (t) => t.state === "TASK_INBOX" || t.state === "TASK_PINNED"
+    );
+    return filteredTasks;
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { status } = useSelector((state: any) => state.taskbox);
+
+  const dispatch = useDispatch();
+  const pinTask = (value: string) => {
+    // We're dispatching the Pinned event back to our store
+    dispatch(updateTaskState({ id: value, newTaskState: "TASK_PINNED" }));
   };
+  const archiveTask = (value: string) => {
+    // We're dispatching the Archive event back to our store
+    dispatch(updateTaskState({ id: value, newTaskState: "TASK_ARCHIVED" }));
+  };
+
   const LoadingRow = (
     <div className="loading-item">
       <span className="glow-checkbox" />
@@ -26,7 +43,7 @@ export default function TaskList({
       </span>
     </div>
   );
-  if (loading) {
+  if (status === "loading") {
     return (
       <div className="list-items" data-testid="loading" key={"loading"}>
         {LoadingRow}
@@ -53,7 +70,12 @@ export default function TaskList({
   return (
     <div className="list-items">
       {tasks.map((task) => (
-        <Task key={task.id} {...task} {...events} />
+        <Task
+          key={task.id}
+          {...task}
+          onArchiveTask={(task) => archiveTask(task)}
+          onPinTask={(task) => pinTask(task)}
+        />
       ))}
     </div>
   );
