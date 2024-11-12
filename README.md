@@ -64,6 +64,7 @@ set -a && source .env.local && set +a && npx prisma studio
 ## その他
 
 - https://youtu.be/vOLIVFKR-wI?si=wtYJDsKcg3i8_UQt
+- [Standard Redux Toolkit Project Setup with TypeScript](https://redux.js.org/usage/usage-with-typescript#standard-redux-toolkit-project-setup-with-typescript)
 - state の扱い方の比較
   | |特徴|
   |-|-|
