@@ -1,7 +1,14 @@
 /* A simple redux store/actions/reducer implementation.
  * A true app would be more complex and separated into different files.
  */
-import { configureStore, createSlice } from "@reduxjs/toolkit";
+import {
+  Action,
+  configureStore,
+  createSlice,
+  ThunkAction,
+} from "@reduxjs/toolkit";
+
+import counterReducer from "./counterSlice";
 
 /*
  * The initial state of our store when the app loads.
@@ -48,8 +55,17 @@ export const { updateTaskState } = TasksSlice.actions;
  */
 const store = configureStore({
   reducer: {
+    counter: counterReducer,
     taskbox: TasksSlice.reducer,
   },
 });
 
 export default store;
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>;
