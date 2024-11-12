@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inconsolata } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 const fnt = Inconsolata({ subsets: ["latin"] });
 
@@ -9,6 +10,23 @@ export const metadata: Metadata = {
   title: "Reading Recorder",
   description: "自分が読んだ書籍の記録を残すためのアプリ",
 };
+
+const LinkItem = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) => (
+  <li className="block text-blue-300 px-2 py-2 my-1">
+    <Link
+      className="no-underline text-blue-300 px-2 py-2 hover:bg-gray-100 rounded"
+      href={href}
+    >
+      {children}
+    </Link>
+  </li>
+);
 
 export default function RootLayout({
   children,
@@ -22,34 +40,19 @@ export default function RootLayout({
           Reading Recorder
         </h1>
         <ul className="flex bg-blue-600 mb-4 pl-2">
-          <li className="block px-4 py-2 my-1 hover:bg-gray-100 rounded">
-            <Link className="no-underline text-blue-300" href="/">
-              Home
-            </Link>
-          </li>
-          <li className="block text-blue-300 px-4 py-2 my-1 hover:bg-gray-100 rounded">
-            <Link className="no-underline text-blue-300" href="/books">
-              Search
-            </Link>
-          </li>
-          <li className="block text-blue-300 px-4 py-2 my-1 hover:bg-gray-100 rounded">
+          <LinkItem href="/">Home</LinkItem>
+          <LinkItem href="/books">Search</LinkItem>
+          <LinkItem href="/counter">Counter</LinkItem>
+          <LinkItem href="/taskbox">Taskbox</LinkItem>
+          <li className="block text-blue-300 px-2 py-2 my-1">
             <a
-              className="no-underline text-blue-300"
+              className="no-underline text-blue-300 px-2 py-2 hover:bg-gray-100 rounded"
               href="https://wings.msn.to/"
               target="_blank"
             >
               Support
+              <OpenInNewIcon fontSize="small" className="mb-1 ml-1" />
             </a>
-          </li>
-          <li className="block text-blue-300 px-4 py-2 my-1 hover:bg-gray-100 rounded">
-            <Link className="no-underline text-blue-300" href="/counter">
-              Counter
-            </Link>
-          </li>
-          <li className="block text-blue-300 px-4 py-2 my-1 hover:bg-gray-100 rounded">
-            <Link className="no-underline text-blue-300" href="/taskbox">
-              Taskbox
-            </Link>
           </li>
         </ul>
         <div className="ml-2">{children}</div>
