@@ -44,6 +44,7 @@ export default function RootLayout({
           <LinkItem href="/books">Search</LinkItem>
           <LinkItem href="/counter">Counter</LinkItem>
           <LinkItem href="/taskbox">Taskbox</LinkItem>
+          <LinkItem href="/lexical">Lexical</LinkItem>
           <li className="block text-blue-300 px-2 py-2 my-1">
             <a
               className="no-underline text-blue-300 px-2 py-2 hover:bg-gray-100 rounded"
