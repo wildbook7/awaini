@@ -28,6 +28,7 @@ import {
 } from "lexical";
 
 import ExampleTheme from "./ExampleTheme";
+import ImportPlugin from "./plugins/ImportPlugin";
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import TreeViewPlugin from "./plugins/TreeViewPlugin";
 import { parseAllowedColor, parseAllowedFontSize } from "./styleConfig";
@@ -144,6 +145,8 @@ const editorConfig = {
 };
 
 export default function Page() {
+  const defaultContentAsHTML = "<div>twenty <strong>twenty-five</strong></div>";
+
   return (
     <LexicalComposer initialConfig={editorConfig}>
       <div className="editor-container">
@@ -161,6 +164,7 @@ export default function Page() {
             }
             ErrorBoundary={LexicalErrorBoundary}
           />
+          <ImportPlugin defaultContentAsHTML={defaultContentAsHTML} />
           <HistoryPlugin />
           <AutoFocusPlugin />
           <TreeViewPlugin />
