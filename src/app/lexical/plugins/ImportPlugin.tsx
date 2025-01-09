@@ -18,6 +18,7 @@ export const ImportPlugin: FC<{
         textHtmlMimeType
       );
       const nodes = $generateNodesFromDOM(editor, dom);
+      $getRoot().clear();
       $getRoot().select();
       $insertNodes(nodes);
     });
